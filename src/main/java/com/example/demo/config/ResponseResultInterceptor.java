@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 @Slf4j
@@ -18,27 +19,27 @@ public class ResponseResultInterceptor implements HandlerInterceptor {
 
     public static final String RESPONSE_RESULT_ANN = "RESPONSE_RESULT_ANN";
 
-    private static Cache<HandlerMethod, ResponseResult> rrCache = CacheBuilder.newBuilder().maximumSize(50).build();
+    private static Cache<HandlerMethod, Optional<ResponseResult>> rrCache = CacheBuilder.newBuilder().maximumSize(50).build();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        System.out.println("---------preHandle--------");
         if (handler instanceof HandlerMethod) {
             final HandlerMethod handlerMethod = (HandlerMethod) handler;
-            ResponseResult responseResult = rrCache.get(handlerMethod, new Callable<ResponseResult>() {
+            Optional<ResponseResult> responseResultOpt = rrCache.get(handlerMethod, new Callable<Optional<ResponseResult>>() {
                 @Override
-                public ResponseResult call() throws Exception {
+                public Optional<ResponseResult> call() throws Exception {
                     final Class<?> clazz = handlerMethod.getBeanType();
                     final Method method = handlerMethod.getMethod();
-                    ResponseResult rr = null;
+                    Optional<ResponseResult> rr = Optional.empty();
                     if (clazz.isAnnotationPresent(ResponseResult.class) || method.isAnnotationPresent(ResponseResult.class)) {
-                        rr = clazz.getAnnotation(ResponseResult.class);
+                        rr = Optional.of(clazz.getAnnotation(ResponseResult.class));
                     }
                     return rr;
                 }
             });
-            if (responseResult != null) {
-                request.setAttribute(RESPONSE_RESULT_ANN, responseResult);
+            if (responseResultOpt.isPresent()) {
+                request.setAttribute(RESPONSE_RESULT_ANN, responseResultOpt.get());
             }
         }
         return true;
