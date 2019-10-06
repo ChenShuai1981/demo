@@ -1,0 +1,11 @@
+{
+  "name": {
+    "firstName": "Jef",
+    "lastName": "Robbot"
+  },
+  "sport": "cricket",
+  "age": 25,
+  "id": 121,
+  "addresses": [{"type":"home", "zipCode": 200032}, {"type":"office", "zipCode": 100010}],
+  "lastScores": [77, 72, 23, 57, 54, 36, 74, 17]
+}

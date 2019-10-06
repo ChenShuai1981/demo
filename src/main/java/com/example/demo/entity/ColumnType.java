@@ -1,0 +1,6 @@
+package com.example.demo.entity;
+
+public enum ColumnType {
+    CHAR, STRING, INT, SHORT, LONG, BOOLEAN, DOUBLE, FLOAT, BIG_DEC, BIG_INT,
+    SQL_DATE, SQL_TIME, SQL_TIMESTAMP, LOCAL_DATE, LOCAL_TIME, LOCAL_DATE_TIME, INSTANT
+}
