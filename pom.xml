@@ -149,10 +149,16 @@
 			<version>0.13.0</version>
 		</dependency>
 
+		<!--<dependency>-->
+			<!--<groupId>org.pegdown</groupId>-->
+			<!--<artifactId>pegdown</artifactId>-->
+			<!--<version>1.5.0</version>-->
+		<!--</dependency>-->
+
 		<dependency>
-			<groupId>org.pegdown</groupId>
-			<artifactId>pegdown</artifactId>
-			<version>1.5.0</version>
+			<groupId>org.roaringbitmap</groupId>
+			<artifactId>RoaringBitmap</artifactId>
+			<version>0.8.1</version>
 		</dependency>
 
 		<dependency>
